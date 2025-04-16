@@ -1,0 +1,35 @@
+.media-list {
+    margin-bottom: 0;
+    padding-left: 0;
+}
+.icon-list {
+    padding-left: 0;
+}
+.icon-list li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+ul, ol { padding-left: 0; }
+select.form-select-lg {
+    height: 42px !important;
+    height: calc(1.5em + 1.8rem + 2px) !important;
+}
+/* BLOG */
+.media {
+    display: flex;
+}
+.media-body {
+    padding-left: 20px;
+}
+.main-menu.menu-fixed {
+    position: fixed;
+    height: 100%;
+    top: 0 !important;
+    height: calc(100% - 0rem) !important;
+}
+.input-group-addon {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}

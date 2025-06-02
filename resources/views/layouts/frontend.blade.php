@@ -10,9 +10,9 @@
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <title>iProperty | Real Estate Bootstarp Template</title>
 
-    <link rel="icon" href="assets/images/favicon.png" type="image/png">
+    <link rel="icon" href="{{ asset('assets/images/favicon.png') }}" type="image/png">
 
-    <link href="https://fonts.googleapis.com/css?family=Varela+Round" rel="stylesheet">
+    <link href="{{ asset('https://fonts.googleapis.com/css?family=Varela+Round') }}" rel="stylesheet">
 
     <link rel="stylesheet" type="text/css" href="{{ asset('/assets/css/bootstrap.min.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('/assets/css/main.css') }}">
@@ -107,10 +107,30 @@
                                         </div>
                                     </div>
                                 </li>
+                                @guest('client')
                                 <li class="hidden-xs hidden-sm">
                                     <a href="{{url('agence/login')}}"
                                         class="btn btn-base rounded-0 text-bold-600 text-spacing-5 text-uppercase text-size-13 p-top-12 p-bottom-12 p-left-15 p-right-15 text-size-11-lg">Connexion Agence</a>
                                 </li>
+                                @endguest
+                                @auth('client')
+                                <li data-menu="dropdown" class="dropdown nav-item">
+                                <a href="#" class="nav-link">
+                                <i class="fa fa-user"></i>
+                                <span>{{ Auth::guard('client')->user()->prenom }} {{ Auth::guard('client')->user()->nom }}</span>
+                                </a>
+                                </li>
+                               <li class="hidden-xs hidden-sm">
+                               <form method="POST" action="{{ route('client.logout') }}">
+                               @csrf
+                               <button type="submit"
+                               class="btn btn-base rounded-0 text-bold-600 text-spacing-5 text-uppercase text-size-13 p-top-12 p-bottom-12 p-left-15 p-right-15 text-size-11-lg"
+                               style="border: none; background: none;">
+                                Déconnexion
+                                </button>
+                               </form>
+                               </li>
+                               @endauth
                             </ul>
                         </div>
                     </div>
@@ -128,25 +148,27 @@
 
                 <ul id="main-menu-navigation" data-menu="menu-navigation" class="nav navbar-nav">
                     <li data-menu="dropdown" class="nav-item active">
-                        <a href="#"  class=" nav-link"><i
-                                class="fa fa-home"></i> <span>Acceuil</span></a>
+                        <a href="home"  class=" nav-link"><i
+                                class="fa fa-home"></i> <span>Accueil</span></a>
                     </li>
                     <li data-menu="dropdown" class="dropdown nav-item">
-                        <a href="#"  class=" nav-link"><i
-                                class="fa fa-building-o"></i><span>Proprietes</span></a>
+                        <a href="#proprietes"  class=" nav-link"><i
+                                class="fa fa-building-o"></i><span>Propriétés</span></a>
                     </li>
                     <li data-menu="dropdown" class="dropdown nav-item">
-                        <a href="agencies.html"  class=" nav-link"><i
+                        <a href=""  class=" nav-link"><i
                                 class="fa fa-id-badge"></i> <span>Agences</span></a>
                     </li>
+                    @guest('client')
                     <li data-menu="dropdown" class="dropdown nav-item">
-                        <a href="agencies.html"  class=" nav-link"><i
-                                class="fa fa-user-plus"></i> <span>Creer un compte</span></a>
+                        <a href="{{ route('client.register') }}"  class=" nav-link"><i
+                                class="fa fa-user-plus"></i> <span>Créer un compte</span></a>
                     </li>
                     <li data-menu="dropdown" class="dropdown nav-item">
-                        <a href="agencies.html"  class=" nav-link"><i
+                        <a href="{{ route('client.login') }}"  class=" nav-link"><i
                                 class="fa fa-sign-in"></i> <span>Se Connecter</span></a>
                     </li>
+                    @endguest
                 </ul>
 
             </div>
@@ -419,7 +441,7 @@
     <script src="assets/vendors/isotope/jquery.isotope.min.js"></script>
 
     <!-- OWL CAROUSEL SLIDER -->
-    <script src="assets/vendors/owl.carousel/js/owl.carousel.min.js"></script>
+    <script src="{{ asset('assets/vendors/owl.carousel/js/owl.carousel.min.js') }}"></script>
 
     <!-- SILCK SLIDER -->
     <script src="assets/vendors/slick/slick.js"></script>
@@ -542,6 +564,19 @@
         ga('create', 'UA-70250779-1', 'auto');
         ga('send', 'pageview');
     </script>
+    @if (session('client_name'))
+    <div>
+        Bonjour, {{ session('client_name') }}
+        <form method="POST" action="{{ route('deconnexion') }}" style="display:inline;">
+            @csrf
+            <button type="submit">Déconnexion</button>
+        </form>
+    </div>
+@else
+    <a href="{{ route('register') }}">Créer un compte</a> |
+    <a href="{{ route('register') }}">Se connecter</a>
+@endif
+
 
 </body>
 

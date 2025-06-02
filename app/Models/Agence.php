@@ -26,6 +26,8 @@ class Agence extends Authenticatable
 
     public function proprietes()
     {
-        return $this->hasMany(Propriete::class, 'id_agence');
+        return $this->hasMany(Propriete::class);
     }
+  
+
 }

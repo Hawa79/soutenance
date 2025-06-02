@@ -64,6 +64,13 @@
                                     <span>{{$message}}</span>
                                 @enderror
                             </div>
+                            <div class="form-group col-md-6">
+                                <label for="exampleInputPassword1">Mot de passe</label>
+                                <input type="text" name="mot_de_passe" class="form-control">
+                                @error('mot_de_passe')
+                                    <span>{{$message}}</span>
+                                @enderror
+                            </div>
                         </div>
                         <button type="submit" class="btn btn-primary">Envoyer</button>
                     </form>

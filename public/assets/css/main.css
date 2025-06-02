@@ -48,12 +48,20 @@ Version: 1.0
 /*============================================================*/
 /* 01 BACKGROUNDS */
 /*============================================================*/
-.bg-property-slider-1 { background: url('../images/property-slider/property-1.jpg'); }
-.bg-property-slider-2 { background: url('../images/property-slider/property-2.jpg'); }
-.bg-property-slider-3 { background: url('../images/property-slider/property-3.jpg'); }
+.bg-property-slider-1 { background: url('/assets/images/property/phot.jpg'); }
+.bg-property-slider-2 { background: url('/assets/images/property/propriete11.jpeg'); }
+.bg-property-slider-3 { background: url('/assets/images/property/property-5.jpg'); }
 /*============================================================*/
 /* 02 RESET */
 /*============================================================*/
+.bg-property-slider-1, 
+.bg-property-slider-2, 
+.bg-property-slider-3 {
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
 body {
     font-family: 'Varela Round', sans-serif;
     font-size: 14px;

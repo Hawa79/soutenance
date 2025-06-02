@@ -7,7 +7,7 @@
             </div>
         </div>
         <div class="ml-2">
-            <h6 class="mb-0 text-white">{{ Auth::guard('agence')->user()->nom}} {{ Auth::guard('agence')->user()->prenom}}</h6>
+            <h6 class="mb-0 text-white">{{ Auth::guard('agence')->user()?->nom }} {{ Auth::guard('agence')->user()?->prenom }}</h6>
             <small class="d-block text-white">Agence</small>
         </div>
         <div class="ml-auto user-setting">
@@ -21,7 +21,7 @@
                 <span class="nav-title">Tableau de bord</span>
             </a>
         </li>
-        <li><a href="#" aria-expanded="false"><i class="nav-icon ti ti-layout-column3-alt"></i><span class="nav-title">Proprietes</span></a> </li>
+        <li><a href="{{ route('agence.propriete.index') }}" aria-expanded="false"><i class="nav-icon ti ti-layout-column3-alt"></i><span class="nav-title">Proprietes</span></a> </li>
         <li><a href="" aria-expanded="false"><i class="nav-icon ti ti-user"></i><span class="nav-title">Profile</span></a> </li>
     </ul>
 </div>

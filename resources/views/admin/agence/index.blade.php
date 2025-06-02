@@ -6,7 +6,9 @@
             <div class="d-block d-sm-flex flex-nowrap align-items-center">
                 <div class="page-title mb-2 mb-sm-0">
                     <h1>Listes des agences</h1>
+
                 </div>
+                
                 <div class="ml-auto d-flex align-items-center">
                     <nav>
                         <ol class="breadcrumb p-0 m-b-0">

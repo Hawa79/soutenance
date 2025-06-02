@@ -6,12 +6,12 @@ use Illuminate\Database\Eloquent\Model;
 
 class Location extends Model
 {
+
     protected $fillable = [
-        'client_id',
-        'propriete_id',
+        'propriete',
+        'client',
         'date_debut',
         'date_fin',
-        'montant_loyer',
-        'etat',
+        'montant',
     ];
 }

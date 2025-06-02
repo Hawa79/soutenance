@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Http\Controllers\Admin;
-
 use App\Models\Client;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -90,4 +89,32 @@ class ClientController extends Controller
         $client->delete();
         return redirect()->route('clients.index')->with('success', 'Client supprimé avec succès.');
     }
+
+    // Affichage de la page d'accueil client
+    public function accueil()
+    {
+        return view('client.accueil');
+    }
+    public function handleSignup(Request $request)
+{
+    $request->validate([
+        'prenom' => 'required|string|max:255',
+        'nom' => 'required|string|max:255',
+        'email' => 'required|email|unique:clients,email',
+        'password' => 'required|string|min:6|confirmed',
+    ]);
+
+    // Optionnel : créer un client dans la BDD
+    // Client::create([...]);
+
+    // Stocker le nom complet en session
+    $fullName = $request->prenom . ' ' . $request->nom;
+    session(['client_name' => $fullName]);
+
+    // Rediriger vers la page frontend
+    return redirect()->route('frontend');
 }
+
+}
+
+

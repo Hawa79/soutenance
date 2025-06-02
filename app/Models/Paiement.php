@@ -6,5 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class Paiement extends Model
 {
-    //
+    protected $fillable = [
+        "propriete",
+        "client",
+        "location",
+        "date_paiement",
+        "montant"
+    ];
 }

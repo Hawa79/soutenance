@@ -7,17 +7,14 @@
                 <div class="property-media overlay-wrapper p-top-100 p-bottom-50">
                     <div class="container p-top-100">
                         <div
-                            class="badge badge-base text-white m-right-8 p-top-8 p-right-12 p-bottom-8 p-left-12 rounded-0 text-size-14 m-bottom-20">
-                            Featured</div>
-                        <div
                             class="badge badge-success p-top-8 p-right-12 p-bottom-8 p-left-12 rounded-0 text-size-14 m-bottom-20">
-                            For Rent</div>
+                            A vendre</div>
                         <div class="clearfix"></div>
-                        <h2 class="text-white text-bold-600 text-size-50 text-size-40-sm m-bottom-10">$250,000 <small
-                                class="text-size-18">Per Month</small></h2>
+                        <h2 class="text-white text-bold-600 text-size-50 text-size-40-sm m-bottom-10">150 000 000 FCFA <small
+                                class="text-size-18"></small></h2>
                         <h5><a class="text-white text-bold-500 text-size-30 text-size-25-sm text-white text-white-hover m-bottom-10"
-                                href="#">Beautiful Small Apartment</a></h5>
-                        <p class="text-white">253 Lake Washington, USA</p>
+                                href="#">Bel petit appartement</a></h5>
+                        <p class="text-white">Rue 238 Bamako , MALI</p>
                     </div>
                     <div class="overlay bg-bg opacity-9"></div>
                 </div>
@@ -29,12 +26,12 @@
                     <div class="container p-top-100">
                         <div
                             class="badge badge-success p-top-8 p-right-12 p-bottom-8 p-left-12 rounded-0 text-size-14 m-bottom-20">
-                            For Sale</div>
+                            A louer</div>
                         <div class="clearfix"></div>
-                        <h2 class="text-white text-bold-600 text-size-50 text-size-40-sm m-bottom-10">$120,000</h2>
+                        <h2 class="text-white text-bold-600 text-size-50 text-size-40-sm m-bottom-10">50 000 000 FCFA</h2>
                         <h5><a class="text-white text-bold-500 text-size-30 text-size-25-sm text-white text-white-hover m-bottom-10"
-                                href="#">Beautiful Garaes Condo</a></h5>
-                        <p class="text-white">154 Drive, New York</p>
+                                href="#">Jolie maison</a></h5>
+                        <p class="text-white">Rue 233, Ségou</p>
                     </div>
                     <div class="overlay bg-bg opacity-9"></div>
                 </div>
@@ -45,17 +42,14 @@
                 <div class="property-media overlay-wrapper p-top-100 p-bottom-50">
                     <div class="container p-top-100">
                         <div
-                            class="badge badge-base text-white m-right-8 p-top-8 p-right-12 p-bottom-8 p-left-12 rounded-0 text-size-14 m-bottom-20">
-                            Featured</div>
-                        <div
                             class="badge badge-success p-top-8 p-right-12 p-bottom-8 p-left-12 rounded-0 text-size-14 m-bottom-20">
-                            For Rent</div>
+                            A vendre</div>
                         <div class="clearfix"></div>
-                        <h2 class="text-white text-bold-600 text-size-50 text-size-40-sm m-bottom-10">$145,000 <small
-                                class="text-size-18">Per Month</small></h2>
+                        <h2 class="text-white text-bold-600 text-size-50 text-size-40-sm m-bottom-10">145 000 000 FCFA<small
+                                class="text-size-18"></small></h2>
                         <h5><a class="text-white text-bold-500 text-size-30 text-size-25-sm text-white text-white-hover m-bottom-10"
-                                href="#">Global Land House</a></h5>
-                        <p class="text-white">110 Lake, United Kingdom</p>
+                                href="#">Maison cool</a></h5>
+                        <p class="text-white">Rue 448, Kayes</p>
                     </div>
                     <div class="overlay bg-bg opacity-9"></div>
                 </div>
@@ -70,299 +64,100 @@
         - Begin: PROPERTY -
     #################################
     -->
-    <div class="bg-white p-top-60 p-bottom-60">
-        <div class="container">
 
-            <div>
 
-                <ul class="row" data-plugin-masonry>
+   @php
+    // Filtrer une seule propriété par agence
+    $proprietesUniques = collect();
+    $agencesDejaAjoutees = [];
 
-                    <!-- PROPERTY -->
-                    <li class="col-lg-4 col-md-6">
+    foreach ($proprietes as $propriete) {
+        if (!in_array($propriete->agence_id, $agencesDejaAjoutees)) {
+            $proprietesUniques->push($propriete);
+            $agencesDejaAjoutees[] = $propriete->agence_id;
+        }
 
-                        <div
-                            class="property bg-light-2 m-bottom-30 box-shadow-1 box-shadow-2-hover border-1 border-solid border-light">
-                            <div class="property-media overlay-wrapper">
-                                <img class="full-width" src="/assets/images/property/property-1.jpg" alt="Property 1">
-                                <div class="media-data">
-                                    <div class="position-top">
-                                        <div class="text-white text-size-24 pull-right"><a
-                                                class="text-white text-base-hover" href="#"><i
-                                                    class="fa fa-heart-o"></i></a></div>
-                                    </div>
-                                    <div class="position-bottom">
-                                        <div
-                                            class="badge badge-base text-white pull-left m-right-8 p-top-8 p-right-12 p-bottom-8 p-left-12 rounded-0">
-                                            Featured</div>
-                                        <div
-                                            class="badge badge-success pull-left p-top-8 p-right-12 p-bottom-8 p-left-12 rounded-0">
-                                            For Rent</div>
-                                        <div class="text-white text-size-18 pull-right"><i class="fa fa-camera"></i>
-                                            12</div>
-                                    </div>
+        if ($proprietesUniques->count() === 3) {
+            break;
+        }
+    }
+@endphp
+<div id="proprietes" class="container mt-4">
+    <div class="row">
+        @foreach ($proprietesUniques as $propriete)
+            <div class="col-md-4 mb-4">
+                <div class="card shadow-sm border-0 h-100">
+                    <div id="carousel{{ $propriete->id }}" class="carousel slide" data-bs-ride="carousel">
+                        <div class="carousel-inner">
+                            @foreach ($propriete->images as $index => $image)
+                                <div class="carousel-item {{ $index === 0 ? 'active' : '' }}">
+                                    <img src="{{ asset('storage/' . $image->image) }}" class="d-block w-100" style="height: 250px; object-fit: cover;" alt="Image {{ $index + 1 }}">
                                 </div>
-                                <div class="overlay bg-bg opacity-9"></div>
-                            </div>
-                            <div class="property-section p-left-15 p-right-15">
-                                <div class="m-top-20 m-bottom-20">
-                                    <h2 class="text-base text-bold-700 m-top-15">$250,000 <small
-                                            class="text-size-14 text-muted">Per Month</small></h2>
-                                    <h5><a class="text-bold-600 text-dark text-base-hover" href="#">Beautiful
-                                            Small Apartment</a></h5>
-                                    <p>253 Lake Washington, USA</p>
-                                    <ul class="icon-list list-inline m-bottom-0">
-                                        <li class="list-inline-item"><i class="btn btn-base rounded-0 fa fa-bed"></i>
-                                            5 Beds</li>
-                                        <li class="list-inline-item"><i class="btn btn-base rounded-0 fa fa-tint"></i>
-                                            3 Baths</li>
-                                        <li class="list-inline-item"><i
-                                                class="btn btn-base rounded-0 fa fa-expand"></i> 36,000 Sq Ft</li>
-                                    </ul>
-                                </div>
-                            </div>
+                            @endforeach
                         </div>
 
-                    </li>
-                    <!-- /PROPERTY -->
+                        @if ($propriete->images->count() > 1)
+                            <button class="carousel-control-prev" type="button" data-bs-target="#carousel{{ $propriete->id }}" data-bs-slide="prev">
+                                <span class="carousel-control-prev-icon"></span>
+                            </button>
+                            <button class="carousel-control-next" type="button" data-bs-target="#carousel{{ $propriete->id }}" data-bs-slide="next">
+                                <span class="carousel-control-next-icon"></span>
+                            </button>
+                        @endif
 
-                    <!-- PROPERTY -->
-                    <li class="col-lg-4 col-md-6">
-
-                        <div
-                            class="property bg-light-2 m-bottom-30 box-shadow-1 box-shadow-2-hover border-1 border-solid border-light">
-                            <div class="property-media overlay-wrapper">
-                                <img class="full-width" src="/assets/images/property/property-2.jpg" alt="Property 2">
-                                <div class="media-data">
-                                    <div class="position-top">
-                                        <div class="text-white text-size-24 pull-right"><a
-                                                class="text-white text-base-hover" href="#"><i
-                                                    class="fa fa-heart"></i></a></div>
-                                    </div>
-                                    <div class="position-bottom">
-                                        <div
-                                            class="badge badge-success pull-left p-top-8 p-right-12 p-bottom-8 p-left-12 rounded-0">
-                                            For Sale</div>
-                                        <div class="text-white text-size-18 pull-right"><i class="fa fa-camera"></i> 6
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="overlay bg-bg opacity-9"></div>
-                            </div>
-                            <div class="property-section p-left-15 p-right-15">
-                                <div class="m-top-20 m-bottom-20">
-                                    <h2 class="text-base text-bold-700 m-top-15">$120,000</h2>
-                                    <h5><a class="text-bold-600 text-dark text-base-hover" href="#">Beautiful
-                                            Garaes Condo</a></h5>
-                                    <p>154 Drive, New York</p>
-                                    <ul class="icon-list list-inline m-bottom-0">
-                                        <li class="list-inline-item"><i class="btn btn-base rounded-0 fa fa-bed"></i>
-                                            4 Beds</li>
-                                        <li class="list-inline-item"><i class="btn btn-base rounded-0 fa fa-tint"></i>
-                                            2 Baths</li>
-                                        <li class="list-inline-item"><i
-                                                class="btn btn-base rounded-0 fa fa-expand"></i> 45,000 Sq Ft</li>
-                                    </ul>
-                                </div>
-                            </div>
+                        <div class="position-absolute top-0 end-0 p-2">
+                            <button class="btn btn-light rounded-circle shadow-sm" onclick="ajouterFavori(this)">
+                                <i class="fa fa-heart"></i>
+                            </button>
                         </div>
 
-                    </li>
-                    <!-- /PROPERTY -->
-
-                    <!-- PROPERTY -->
-                    <li class="col-lg-4 col-md-6">
-
-                        <div
-                            class="property bg-light-2 m-bottom-30 box-shadow-1 box-shadow-2-hover border-1 border-solid border-light">
-                            <div class="property-media overlay-wrapper">
-                                <img class="full-width" src="/assets/images/property/property-3.jpg" alt="Property 3">
-                                <div class="media-data">
-                                    <div class="position-top">
-                                        <div class="text-white text-size-24 pull-right"><a
-                                                class="text-white text-base-hover" href="#"><i
-                                                    class="fa fa-heart-o"></i></a></div>
-                                    </div>
-                                    <div class="position-bottom">
-                                        <div
-                                            class="badge badge-base text-white pull-left m-right-8 p-top-8 p-right-12 p-bottom-8 p-left-12 rounded-0">
-                                            Featured</div>
-                                        <div
-                                            class="badge badge-success pull-left p-top-8 p-right-12 p-bottom-8 p-left-12 rounded-0">
-                                            For Rent</div>
-                                        <div class="text-white text-size-18 pull-right"><i class="fa fa-camera"></i>
-                                            14</div>
-                                    </div>
-                                </div>
-                                <div class="overlay bg-bg opacity-9"></div>
-                            </div>
-                            <div class="property-section p-left-15 p-right-15">
-                                <div class="m-top-20 m-bottom-20">
-                                    <h2 class="text-base text-bold-700 m-top-15">$145,000 <small
-                                            class="text-size-14 text-muted">Per Month</small></h2>
-                                    <h5><a class="text-bold-600 text-dark text-base-hover" href="#">Global Land
-                                            House</a></h5>
-                                    <p>110 Lake, United Kingdom</p>
-                                    <ul class="icon-list list-inline m-bottom-0">
-                                        <li class="list-inline-item"><i class="btn btn-base rounded-0 fa fa-bed"></i>
-                                            6 Beds</li>
-                                        <li class="list-inline-item"><i class="btn btn-base rounded-0 fa fa-tint"></i>
-                                            3 Baths</li>
-                                        <li class="list-inline-item"><i
-                                                class="btn btn-base rounded-0 fa fa-expand"></i> 65,000 Sq Ft</li>
-                                    </ul>
-                                </div>
-                            </div>
+                        <div class="position-absolute bottom-0 start-0 m-2">
+                            @if ($propriete->featured)
+                                <span class="badge bg-primary me-1">Featured</span>
+                            @endif
+                            <span class="badge bg-success">{{ $propriete->etat }}</span>
                         </div>
 
-                    </li>
-                    <!-- /PROPERTY -->
-
-                    <!-- PROPERTY -->
-                    <li class="col-lg-4 col-md-6">
-
-                        <div
-                            class="property bg-light-2 m-bottom-30 box-shadow-1 box-shadow-2-hover border-1 border-solid border-light">
-                            <div class="property-media overlay-wrapper">
-                                <img class="full-width" src="/assets/images/property/property-4.jpg" alt="Property 4">
-                                <div class="media-data">
-                                    <div class="position-top">
-                                        <div class="text-white text-size-24 pull-right"><a
-                                                class="text-white text-base-hover" href="#"><i
-                                                    class="fa fa-heart"></i></a></div>
-                                    </div>
-                                    <div class="position-bottom">
-                                        <div
-                                            class="badge badge-success pull-left p-top-8 p-right-12 p-bottom-8 p-left-12 rounded-0">
-                                            For Rent</div>
-                                        <div class="text-white text-size-18 pull-right"><i class="fa fa-camera"></i> 8
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="overlay bg-bg opacity-9"></div>
-                            </div>
-                            <div class="property-section p-left-15 p-right-15">
-                                <div class="m-top-20 m-bottom-20">
-                                    <h2 class="text-base text-bold-700 m-top-15">$220,000 <small
-                                            class="text-size-14 text-muted">Per Month</small></h2>
-                                    <h5><a class="text-bold-600 text-dark text-base-hover" href="#">Our Quality
-                                            Rent House</a></h5>
-                                    <p>221 Madison Seattle, USA</p>
-                                    <ul class="icon-list list-inline m-bottom-0">
-                                        <li class="list-inline-item"><i class="btn btn-base rounded-0 fa fa-bed"></i>
-                                            7 Beds</li>
-                                        <li class="list-inline-item"><i class="btn btn-base rounded-0 fa fa-tint"></i>
-                                            4 Baths</li>
-                                        <li class="list-inline-item"><i
-                                                class="btn btn-base rounded-0 fa fa-expand"></i> 23,000 Sq Ft</li>
-                                    </ul>
-                                </div>
-                            </div>
+                        <div class="position-absolute bottom-0 end-0 m-2 text-white">
+                            <i class="fa fa-camera"></i> {{ $propriete->images->count() }}
                         </div>
+                    </div>
 
-                    </li>
-                    <!-- /PROPERTY -->
-
-                    <!-- PROPERTY -->
-                    <li class="col-lg-4 col-md-6">
-
-                        <div
-                            class="property bg-light-2 m-bottom-30 box-shadow-1 box-shadow-2-hover border-1 border-solid border-light">
-                            <div class="property-media overlay-wrapper">
-                                <img class="full-width" src="/assets/images/property/property-5.jpg" alt="Property 5">
-                                <div class="media-data">
-                                    <div class="position-top">
-                                        <div class="text-white text-size-24 pull-right"><a
-                                                class="text-white text-base-hover" href="#"><i
-                                                    class="fa fa-heart-o"></i></a></div>
-                                    </div>
-                                    <div class="position-bottom">
-                                        <div
-                                            class="badge badge-base text-white pull-left m-right-8 p-top-8 p-right-12 p-bottom-8 p-left-12 rounded-0">
-                                            Featured</div>
-                                        <div
-                                            class="badge badge-success pull-left p-top-8 p-right-12 p-bottom-8 p-left-12 rounded-0">
-                                            For Sale</div>
-                                        <div class="text-white text-size-18 pull-right"><i class="fa fa-camera"></i>
-                                            16</div>
-                                    </div>
-                                </div>
-                                <div class="overlay bg-bg opacity-9"></div>
-                            </div>
-                            <div class="property-section p-left-15 p-right-15">
-                                <div class="m-top-20 m-bottom-20">
-                                    <h2 class="text-base text-bold-700 m-top-15">$750,000</h2>
-                                    <h5><a class="text-bold-600 text-dark text-base-hover" href="#">Beautiful
-                                            House For Sale</a></h5>
-                                    <p>200 Lake Drive, USA</p>
-                                    <ul class="icon-list list-inline m-bottom-0">
-                                        <li class="list-inline-item"><i class="btn btn-base rounded-0 fa fa-bed"></i>
-                                            4 Beds</li>
-                                        <li class="list-inline-item"><i class="btn btn-base rounded-0 fa fa-tint"></i>
-                                            3 Baths</li>
-                                        <li class="list-inline-item"><i
-                                                class="btn btn-base rounded-0 fa fa-expand"></i> 47,000 Sq Ft</li>
-                                    </ul>
-                                </div>
-                            </div>
+                    <div class="card-body">
+                        <h5 class="text-primary">{{ $propriete->prix }} <small class="text-muted">FCFA</small></h5>
+                        <h6>{{ $propriete->titre }}</h6>
+                        <p class="text-muted mb-2"><i class="fa fa-map-marker-alt me-1"></i> {{ $propriete->adresse }}</p>
+                        <div class="d-flex justify-content-between text-secondary small">
+                            <span><i class="fa fa-bed me-1"></i> {{ $propriete->chambres }} Chambres</span>
+                            <span><i class="fa fa-bath me-1"></i> {{ $propriete->salles_bain }} SDB</span>
+                            <span><i class="fa fa-ruler-combined me-1"></i> {{ $propriete->agence->nom }} Agence</span>
+                            
                         </div>
-
-                    </li>
-                    <!-- /PROPERTY -->
-
-                    <!-- PROPERTY -->
-                    <li class="col-lg-4 col-md-6">
-
-                        <div
-                            class="property bg-light-2 m-bottom-30 box-shadow-1 box-shadow-2-hover border-1 border-solid border-light">
-                            <div class="property-media overlay-wrapper">
-                                <img class="full-width" src="/assets/images/property/property-6.jpg" alt="Property 6">
-                                <div class="media-data">
-                                    <div class="position-top">
-                                        <div class="text-white text-size-24 pull-right"><a
-                                                class="text-white text-base-hover" href="#"><i
-                                                    class="fa fa-heart"></i></a></div>
-                                    </div>
-                                    <div class="position-bottom">
-                                        <div
-                                            class="badge badge-base text-white pull-left m-right-8 p-top-8 p-right-12 p-bottom-8 p-left-12 rounded-0">
-                                            Featured</div>
-                                        <div
-                                            class="badge badge-success pull-left p-top-8 p-right-12 p-bottom-8 p-left-12 rounded-0">
-                                            For Rent</div>
-                                        <div class="text-white text-size-18 pull-right"><i class="fa fa-camera"></i>
-                                            11</div>
-                                    </div>
-                                </div>
-                                <div class="overlay bg-bg opacity-9"></div>
-                            </div>
-                            <div class="property-section p-left-15 p-right-15">
-                                <div class="m-top-20 m-bottom-20">
-                                    <h2 class="text-base text-bold-700 m-top-15">$350,000 <small
-                                            class="text-size-14 text-muted">Per Month</small></h2>
-                                    <h5><a class="text-bold-600 text-dark text-base-hover" href="#">Beautiful
-                                            Water House</a></h5>
-                                    <p>103 Occidental Washington USA</p>
-                                    <ul class="icon-list list-inline m-bottom-0">
-                                        <li class="list-inline-item"><i class="btn btn-base rounded-0 fa fa-bed"></i>
-                                            9 Beds</li>
-                                        <li class="list-inline-item"><i class="btn btn-base rounded-0 fa fa-tint"></i>
-                                            5 Baths</li>
-                                        <li class="list-inline-item"><i
-                                                class="btn btn-base rounded-0 fa fa-expand"></i> 54,000 Sq Ft</li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-
-                    </li>
-                    <!-- /PROPERTY -->
-
-                </ul>
-
+                         <div class="text-center">
+                       <a href="{{ route('client.show', $propriete->id) }}" class="btn btn-outline-primary w-100">
+                        Voir détails
+                       </a>
+                    </div>
+                    </div>
+                </div>
+                 <!-- Bouton Voir détails -->
+                  
             </div>
-
-        </div>
+        @endforeach
     </div>
+</div>
+
+<script>
+    function ajouterFavori(btn) {
+        btn.classList.toggle('btn-light');
+        btn.classList.toggle('btn-danger');
+        const icon = btn.querySelector('i');
+        icon.classList.toggle('fa-heart');
+        icon.classList.toggle('fa-heart-circle-check');
+    }
+</script>
+
+
     <!-- End: PROPERTY -
     ################################################################## -->
 

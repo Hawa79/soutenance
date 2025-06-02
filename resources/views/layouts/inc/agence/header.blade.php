@@ -236,7 +236,8 @@
                         <a href="javascript:void(0)" class="nav-link dropdown-toggle " id="navbarDropdown4" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <div class="d-flex align-items-center text-left">
                             <div class="mr-2">
-                                <h6 class="mb-0">{{ Auth::guard('agence')->user()->nom}} {{ Auth::guard('agence')->user()->prenom}}</h6>
+                                <h6 class="mb-0">
+                                {{ Auth::guard('agence')->user()->nom}} {{ Auth::guard('agence')->user()->prenom}}</h6>
                                 <small class="d-block">Agence</small>
                             </div>
                                <div class="avatar position-relative">

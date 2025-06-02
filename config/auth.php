@@ -2,79 +2,49 @@
 
 return [
 
-    /*
-    |--------------------------------------------------------------------------
-    | Authentication Defaults
-    |--------------------------------------------------------------------------
-    |
-    | This option defines the default authentication "guard" and password
-    | reset "broker" for your application. You may change these values
-    | as required, but they're a perfect start for most applications.
-    |
-    */
-
+    // Définir les valeurs par défaut
     'defaults' => [
-        'guard' => 'web',
-        'passwords' => 'users',
+        'guard' => 'web', // Par défaut on utilise le guard 'web'
+        'passwords' => 'users', // Réinitialisation par défaut
     ],
 
-    /*
-    |--------------------------------------------------------------------------
-    | Authentication Guards
-    |--------------------------------------------------------------------------
-    |
-    | Here you may define every authentication guard for your application.
-    | A default configuration has been set up for you, which uses session
-    | storage and the Eloquent user provider.
-    |
-    | Supported: "session"
-    |
-    */
-
+    // Définir les différents guards disponibles
     'guards' => [
         'web' => [
             'driver' => 'session',
             'provider' => 'users',
         ],
+
+        'client' => [
+            'driver' => 'session',
+            'provider' => 'clients',
+        ],
+
         'agence' => [
-        'driver' => 'session',
-        'provider' => 'agences',
+            'driver' => 'session',
+            'provider' => 'agences',
+        ],
     ],
-],
 
-    /*
-    |--------------------------------------------------------------------------
-    | User Providers
-    |--------------------------------------------------------------------------
-    |
-    | All authentication guards have a user provider, which defines how the
-    | users are actually retrieved out of your database or other storage.
-    | You may configure multiple providers for different user tables/models.
-    |
-    | Supported: "database", "eloquent"
-    |
-    */
-
+    // Définir les providers (les modèles à utiliser)
     'providers' => [
         'users' => [
             'driver' => 'eloquent',
             'model' => App\Models\User::class,
         ],
-        'agences' => [
-        'driver' => 'eloquent',
-        'model' => App\Models\Agence::class, // Vérifiez que ce modèle existe
-    ],
-],
-    /*
-    |--------------------------------------------------------------------------
-    | Resetting Passwords
-    |--------------------------------------------------------------------------
-    |
-    | These settings configure the behavior of Laravel's password reset
-    | functionality, including token storage and expiration time.
-    |
-    */
 
+        'clients' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Client::class,
+        ],
+
+        'agences' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Agence::class,
+        ],
+    ],
+
+    // Configuration de la réinitialisation de mot de passe
     'passwords' => [
         'users' => [
             'provider' => 'users',
@@ -82,24 +52,24 @@ return [
             'expire' => 60,
             'throttle' => 60,
         ],
+
         'agences' => [
             'provider' => 'agences',
+            'table' => 'password_reset_tokens', // même table partagée
+            'expire' => 60,
+            'throttle' => 60,
+        ],
+
+        // Tu peux aussi ajouter pour les clients si besoin
+        'clients' => [
+            'provider' => 'clients',
             'table' => 'password_reset_tokens',
             'expire' => 60,
             'throttle' => 60,
         ],
     ],
 
-    /*
-    |--------------------------------------------------------------------------
-    | Password Confirmation Timeout
-    |--------------------------------------------------------------------------
-    |
-    | This defines how long the password confirmation window lasts before
-    | the user is required to confirm their password again.
-    |
-    */
-
+    // Timeout de confirmation de mot de passe (3h ici)
     'password_timeout' => 10800,
 
 ];

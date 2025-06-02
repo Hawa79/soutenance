@@ -326,7 +326,7 @@
                         <a href="javascript:void(0)" class="nav-link dropdown-toggle " id="navbarDropdown4" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <div class="d-flex align-items-center text-left">
                             <div class="mr-2">
-                                <h6 class="mb-0">{{ Auth::user()->name}}</h6>
+                                <h6 class="mb-0">{{ Auth::guard('agence')->user()->name}}</h6>
                                 <small class="d-block">Super admin</small>
                             </div>
                                <div class="avatar position-relative">
@@ -340,8 +340,8 @@
                             <div class="px-4 py-3 bg-holder bg-overlay-primary-70" style="background-image: url(assets/img/blog/05.jpg);">
                                 <div class="d-flex align-items-center justify-content-between">
                                     <div class="mr-1">
-                                        <h5 class="text-white mb-0">{{ Auth::user()->name}}</h5>
-                                        <small class="text-white">{{ Auth::user()->email}}</small>
+                                        <h5 class="text-white mb-0">{{ Auth::guard('agence')->user()->name}}</h5>
+                                        <small class="text-white">{{ Auth::guard('agence')->user()->email}}</small>
                                     </div>
                                     <a href="#" class="text-white font-20 tooltip-wrapper" data-toggle="tooltip" data-placement="top" title="" data-original-title="Logout"> <i
                                                     class="zmdi zmdi-power"></i></a>

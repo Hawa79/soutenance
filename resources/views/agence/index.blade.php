@@ -2,7 +2,7 @@
 @section('content')
 <div class="row align-items-center mb-2 mb-sm-3">
     <div class="col-xxl-5 col-xl-5 mr-auto">
-        <h3 class="mb-1">Welcome {{ Auth::guard('agence')->user()->nom}} {{ Auth::guard('agence')->user()->prenom}}!</h3>
+        <h3 class="mb-1">Welcome {{ Auth::guard()->user()->name}} !</h3>
         <p>The salary of <span class="text-primary">Karla George</span> is pending since 15 january. <a href="#"> Lean more</a></p>
     </div>
     <div class="col-xxl-6 col-xl-7 mt-4 mt-xl-0">

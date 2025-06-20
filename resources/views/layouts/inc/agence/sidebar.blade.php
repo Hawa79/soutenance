@@ -7,7 +7,7 @@
             </div>
         </div>
         <div class="ml-2">
-            <h6 class="mb-0 text-white">{{ Auth::guard('agence')->user()?->nom }} {{ Auth::guard('agence')->user()?->prenom }}</h6>
+            <h6 class="mb-0 text-white">{{ Auth::guard()->user()->name }}</h6>
             <small class="d-block text-white">Agence</small>
         </div>
         <div class="ml-auto user-setting">

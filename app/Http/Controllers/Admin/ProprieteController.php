@@ -12,23 +12,38 @@ use Illuminate\Support\Facades\Auth;
 class ProprieteController extends Controller
 {
     public function index()
-{
-    $agence_id = Auth::guard('agence')->id();
+    {
+        if (!Auth::check()) {
+            toastr()->error('Veuillez vous connecter.');
+            return redirect()->route('login');
+        }
+
+        $agence_id = Auth::id();
 
         $proprietes = Propriete::with('images')
             ->where('agence_id', $agence_id)
             ->get();
 
         return view('agence.propriete.index', compact('proprietes'));
-}
+    }
 
     public function create()
     {
+        if (!Auth::check()) {
+            toastr()->error('Veuillez vous connecter.');
+            return redirect()->route('login');
+        }
+
         return view('agence.propriete.create');
     }
 
     public function store(Request $request)
     {
+        if (!Auth::check()) {
+            toastr()->error('Veuillez vous connecter.');
+            return redirect()->route('login');
+        }
+
         try {
             $request->validate([
                 'nom' => 'required|string|max:255',
@@ -47,7 +62,7 @@ class ProprieteController extends Controller
             ]);
 
             $propriete = Propriete::create([
-                'agence_id' => Auth::guard('agence')->id(),
+                'agence_id' => Auth::id(),
                 'nom' => $request->nom,
                 'description' => $request->description,
                 'adresse' => $request->adresse,
@@ -84,17 +99,25 @@ class ProprieteController extends Controller
 
     public function show($id)
     {
-            $propriete = Propriete::with('images')->where('id', $id)->firstOrFail();;
+        if (!Auth::check()) {
+            toastr()->error('Veuillez vous connecter.');
+            return redirect()->route('login');
+        }
 
-            // dd($propriete.images);
+        $propriete = Propriete::with('images')->where('id', $id)->firstOrFail();
+
         return view('client.show', compact('propriete'));
-        // return "bonjour".$id;
     }
 
     public function edit($id)
     {
+        if (!Auth::check()) {
+            toastr()->error('Veuillez vous connecter.');
+            return redirect()->route('login');
+        }
+
         $propriete = Propriete::where('id', $id)
-            ->where('agence_id', Auth::guard('agence')->id())
+            ->where('agence_id', Auth::id())
             ->firstOrFail();
 
         return view('agence.propriete.edit', compact('propriete'));
@@ -102,9 +125,14 @@ class ProprieteController extends Controller
 
     public function update(Request $request, $id)
     {
+        if (!Auth::check()) {
+            toastr()->error('Veuillez vous connecter.');
+            return redirect()->route('login');
+        }
+
         try {
             $propriete = Propriete::where('id', $id)
-                ->where('agence_id', Auth::guard('agence')->id())
+                ->where('agence_id', Auth::id())
                 ->firstOrFail();
 
             $validated = $request->validate([
@@ -154,9 +182,14 @@ class ProprieteController extends Controller
 
     public function destroy($id)
     {
+        if (!Auth::check()) {
+            toastr()->error('Veuillez vous connecter.');
+            return redirect()->route('login');
+        }
+
         try {
             $propriete = Propriete::where('id', $id)
-                ->where('agence_id', Auth::guard('agence')->id())
+                ->where('agence_id', Auth::id())
                 ->firstOrFail();
 
             foreach ($propriete->images as $image) {

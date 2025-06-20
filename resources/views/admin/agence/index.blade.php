@@ -34,7 +34,6 @@
                                     <thead>
                                         <tr>
                                             <th>Nom</th>
-                                            <th>Prenom</th>
                                             <th>Email</th>
                                             <th>Action</th>
                                         </tr>
@@ -42,8 +41,7 @@
                                     <tbody>
                                         @foreach ($agences as $agence)
                                             <tr>
-                                                <td>{{ $agence->nom }}</td>
-                                                <td>{{ $agence->prenom }}</td>
+                                                <td>{{ $agence->name }}</td>
                                                 <td>{{ $agence->email }}</td>
                                                 <td>
                                                     <a href="{{ URL('admin/agence/edit/' . $agence->id) }}">

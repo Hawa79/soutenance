@@ -1,8 +1,9 @@
 <?php
-
+  
 namespace App\Http\Controllers;
-
+  
 use App\Models\Propriete;
+use Illuminate\View\View;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -14,20 +15,39 @@ class HomeController extends Controller
      */
     public function __construct()
     {
-        
+        $this->middleware('auth');
     }
-
+  
     /**
      * Show the application dashboard.
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function index()
+    public function index(): View
     {
         $proprietes = Propriete::with(['images', 'agence'])->latest()->take(5)->get();
 
+        return view('home', compact('proprietes'));
 
-    return view('frontend.index', compact('proprietes'));
-        
+    } 
+  
+    /**
+     * Show the application dashboard.
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function adminDashboard(): View
+    {
+        return view('admin.index');
+    }
+  
+    /**
+     * Show the application dashboard.
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function agenceDashboard(): View
+    {
+        return view('agence.dashboard');
     }
 }

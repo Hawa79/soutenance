@@ -14,26 +14,33 @@ return new class extends Migration
         Schema::create('proprietes', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('agence_id');
-            $table->foreign('agence_id')->references('id')->on('agences')->onDelete('cascade');
-            $table->string('nom');                      // le nom de la propriété
-            $table->text('description');                // description complète
+            $table->string('nom');
+            $table->text('description');
             $table->string('adresse');
             $table->string('pays');
             $table->string('ville');
             $table->string('quartier');
             $table->string('type');
-            $table->string('nombre_de_chambres');
-            $table->string('salle_de_bains');
+            $table->integer('nombre_de_chambres');
+            $table->integer('salle_de_bains');
             $table->string('proposition');
             $table->year('annee_de_construction');
-            $table->decimal('prix', 10, 2);
+            $table->integer('prix');
             $table->timestamps();
+
+            // Clé étrangère vers la table agences
+            $table->foreign('agence_id')
+                  ->references('id')
+                  ->on('agences')
+                  ->onDelete('cascade');
         });
     }
 
+    /**
+     * Reverse the migrations.
+     */
     public function down(): void
     {
         Schema::dropIfExists('proprietes');
     }
 };
-     

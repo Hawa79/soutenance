@@ -1,11 +1,12 @@
-*@extends('layouts.admin')
+@extends('layouts.admin')
+
 @section('content')
     <div class="row">
         <div class="col-md-12 mb-2">
             <!-- begin page title -->
             <div class="d-block d-sm-flex flex-nowrap align-items-center">
                 <div class="page-title mb-2 mb-sm-0">
-                    <h1>Listes des agences</h1>
+                    <h1>Ajouter une agence</h1>
                 </div>
                 <div class="ml-auto d-flex align-items-center">
                     <nav>
@@ -14,7 +15,7 @@
                                 <a href="{{ url('') }}"><i class="ti ti-home"></i></a>
                             </li>
                             <li class="breadcrumb-item">
-                                Acceuil
+                                Accueil
                             </li>
                             <li class="breadcrumb-item active text-primary" aria-current="page">Agences</li>
                         </ol>
@@ -23,60 +24,48 @@
             </div>
         </div>
     </div>
-    <a href="{{ url('') }}" class="btn btn-primary mb-2">Retour a la Liste</a>
+
+    <!-- Bouton retour -->
+    <a href="{{ route('admin.agence.index') }}" class="btn btn-secondary mb-3">← Retour à la liste</a>
+
     <div class="row">
         <div class="col-xl-12">
             <div class="card card-statistics">
                 <div class="card-header">
-                    <div class="card-heading">
-                        <h5 class="card-title">Default</h5>
-                    </div>
+                    <h5 class="card-title">Nouvelle Agence</h5>
                 </div>
                 <div class="card-body">
-                    <form action="{{ url('admin/agence/create') }}" method="POST">
+                    <form action="{{ route('admin.agence.store') }}" method="POST">
                         @csrf
                         <div class="row">
                             <div class="form-group col-md-6">
-                                <label for="exampleInputEmail1">Nom</label>
-                                <input type="text" name="nom" class="form-control">
-                                @error('nom')
-                                    <span>{{$message}}</span>
+                                <label>Nom complet</label>
+                                <input type="text" name="name" class="form-control" value="{{ old('name') }}">
+                                @error('name')
+                                    <small class="text-danger">{{ $message }}</small>
                                 @enderror
                             </div>
+
                             <div class="form-group col-md-6">
-                                <label for="exampleInputPassword1">Prenom</label>
-                                <input type="text" name="prenom" class="form-control">
-                                @error('prenom')
-                                    <span>{{$message}}</span>
-                                @enderror
-                            </div>
-                            <div class="form-group col-md-6">
-                                <label for="exampleInputEmail1">Nom d'utilisateur</label>
-                                <input type="text" name="username" class="form-control">
-                                @error('username')
-                                    <span>{{$message}}</span>
-                                @enderror
-                            </div>
-                            <div class="form-group col-md-6">
-                                <label for="exampleInputPassword1">Email</label>
-                                <input type="text" name="email" class="form-control">
+                                <label>Email</label>
+                                <input type="email" name="email" class="form-control" value="{{ old('email') }}">
                                 @error('email')
-                                    <span>{{$message}}</span>
+                                    <small class="text-danger">{{ $message }}</small>
                                 @enderror
                             </div>
+
                             <div class="form-group col-md-6">
-                                <label for="exampleInputPassword1">Mot de passe</label>
-                                <input type="text" name="mot_de_passe" class="form-control">
-                                @error('mot_de_passe')
-                                    <span>{{$message}}</span>
+                                <label>Mot de passe</label>
+                                <input type="password" name="password" class="form-control">
+                                @error('password')
+                                    <small class="text-danger">{{ $message }}</small>
                                 @enderror
                             </div>
                         </div>
-                        <button type="submit" class="btn btn-primary">Envoyer</button>
+                        <button type="submit" class="btn btn-primary">Enregistrer l’agence</button>
                     </form>
                 </div>
             </div>
         </div>
     </div>
-
 @endsection

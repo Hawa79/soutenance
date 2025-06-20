@@ -11,7 +11,7 @@
         </div>
     </div>
 
-    <a href="{{ url('admin/agence/index') }}" class="btn btn-primary mb-2">Retour à la Liste</a>
+    <a href="{{ route('admin.agence.index') }}" class="btn btn-primary mb-2">Retour à la Liste</a>
 
     <div class="row">
         <div class="col-xl-12">

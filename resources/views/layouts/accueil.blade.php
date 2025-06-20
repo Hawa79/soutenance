@@ -8,7 +8,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <title>kcProperty</title>
+    <title>iProperty | Real Estate Bootstarp Template</title>
 
     <link rel="icon" href="{{ asset('assets/images/favicon.png') }}" type="image/png">
 
@@ -107,25 +107,10 @@
                                         </div>
                                     </div>
                                 </li>
-                                @if(Auth::guard('client')->check())
-                                <li class="hidden-xs hidden-sm">
-                                    <form method="POST" action="{{ route('client.logout') }}">
-                                        @csrf
-                                        <button type="submit"
-                                            class="btn btn-base rounded-0 text-bold-600 text-spacing-5 text-uppercase text-size-13 p-top-12 p-bottom-12 p-left-15 p-right-15 text-size-11-lg"
-                                            style="border: none; background: none;">
-                                            Déconnexion
-                                        </button>
-                                    </form>
-                                </li>
-
-
-                                @else
-                                <li class="hidden-xs hidden-sm">
+                                 <li class="hidden-xs hidden-sm">
                                     <a href="{{url('agence/login')}}"
                                         class="btn btn-base rounded-0 text-bold-600 text-spacing-5 text-uppercase text-size-13 p-top-12 p-bottom-12 p-left-15 p-right-15 text-size-11-lg">Connexion Agence</a>
                                 </li>
-                                @endif
                             </ul>
                         </div>
                     </div>
@@ -154,19 +139,13 @@
                         <a href="" class=" nav-link"><i
                                 class="fa fa-id-badge"></i> <span>Agences</span></a>
                     </li>
-                    @if(Auth::guard('client')->check())
-                    <li data-menu="dropdown" class="dropdown nav-item">
-                        <a href="" class=" nav-link"><i
-                                class="fa fa-user"></i> <span>{{ Auth::guard('client')->user()->nom }} {{ Auth::guard('client')->user()->prenom }}</span></a>
-                    </li>
-                    @endif
                     @guest('client')
                     <li data-menu="dropdown" class="dropdown nav-item">
                         <a href="{{ route('client.register') }}" class=" nav-link"><i
                                 class="fa fa-user-plus"></i> <span>Créer un compte</span></a>
                     </li>
                     <li data-menu="dropdown" class="dropdown nav-item">
-                        <a href="{{ route('login') }}" class=" nav-link"><i
+                        <a href="{{ route('client.login') }}" class=" nav-link"><i
                                 class="fa fa-sign-in"></i> <span>Se Connecter</span></a>
                     </li>
                     @endguest

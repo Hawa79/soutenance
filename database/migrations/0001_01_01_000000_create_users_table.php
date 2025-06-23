@@ -1,5 +1,4 @@
 <?php
-
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Schema;
@@ -14,12 +13,13 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('users', function (Blueprint $table) {
-                $table->id();
-                $table->string('name');
-                $table->string('email')->unique();
-                $table->string('password');
-                $table->rememberToken();
-                $table->timestamps();
+            $table->id();
+            $table->string('name');
+            $table->string('email')->unique();
+            $table->string('password');
+            $table->tinyInteger('type')->default(0); // Ajout colonne type
+            $table->rememberToken();
+            $table->timestamps();
         });
 
         Schema::create('password_reset_tokens', function (Blueprint $table) {
@@ -37,11 +37,13 @@ return new class extends Migration
             $table->integer('last_activity')->index();
         });
 
+        // Insert superadmin avec type 0 (normal)
         DB::table('users')->insert([
             [
                 'name' => 'Affou COULIBALY',
                 'email' => 'superadmin@gmail.com',
                 'password' => Hash::make('password'),
+                'type' => 0,
             ],
         ]);
     }

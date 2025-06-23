@@ -12,7 +12,7 @@ class LoginController extends Controller
 {
     use AuthenticatesUsers;
 
-    protected $redirectTo = '/dashbord';
+    protected $redirectTo = '/dashboard'; // Corrigé "dashbord" → "dashboard"
 
     public function __construct()
     {
@@ -20,33 +20,43 @@ class LoginController extends Controller
     }
 
     public function login(Request $request): RedirectResponse
-    {   
-        $input = $request->all();
-
-        $this->validate($request, [
+    {
+        $request->validate([
             'email' => 'required|email',
             'password' => 'required',
         ]);
 
-        if (auth()->attempt(['email' => $input['email'], 'password' => $input['password']])) {
-            if (auth()->user()->type == 'admin') {
-                return redirect()->route('admin.dashboard');
-            } elseif (auth()->user()->type == 'agence') {
-                return redirect()->route('agence.dashboard');
-            } else {
-                return redirect()->route('client.dashboard');
+        $credentials = $request->only('email', 'password');
+
+        if (Auth::attempt($credentials)) {
+            $user = Auth::user();
+
+            switch ($user->type) {
+                case 'admin':
+                case 0: // si admin est type 0
+                    return redirect()->route('admin.dashboard');
+                case 'agence':
+                case 1: // si agence est type 1
+                    return redirect()->route('agence.dashboard');
+                case 'client':
+                case 2: // si client est type 2
+                    return redirect()->route('client.dashboard');
+                default:
+                    Auth::logout();
+                    return redirect('/login')->with('error', 'Type d\'utilisateur non reconnu.');
             }
-        } else {
-            return redirect("login")->with('error', 'Email ou mot de passe incorrect.');
         }
+
+        return redirect()->back()->with('error', 'Email ou mot de passe incorrect.');
     }
 
     public function logout(Request $request): RedirectResponse
     {
         Auth::logout();
+
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return redirect('/login');
+        return redirect('/login')->with('success', 'Déconnexion réussie.');
     }
 }

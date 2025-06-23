@@ -3,7 +3,7 @@
 @section('content')
     <div class="row">
         <div class="col-md-12 mb-2">
-            <!-- begin page title -->
+            <!-- Titre de page -->
             <div class="d-block d-sm-flex flex-nowrap align-items-center">
                 <div class="page-title mb-2 mb-sm-0">
                     <h1>Ajouter une agence</h1>
@@ -12,11 +12,9 @@
                     <nav>
                         <ol class="breadcrumb p-0 m-b-0">
                             <li class="breadcrumb-item">
-                                <a href="{{ url('') }}"><i class="ti ti-home"></i></a>
+                                <a href="{{ route('admin.dashboard') }}"><i class="ti ti-home"></i></a>
                             </li>
-                            <li class="breadcrumb-item">
-                                Accueil
-                            </li>
+                            <li class="breadcrumb-item">Accueil</li>
                             <li class="breadcrumb-item active text-primary" aria-current="page">Agences</li>
                         </ol>
                     </nav>

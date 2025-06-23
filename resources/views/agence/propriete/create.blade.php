@@ -35,6 +35,7 @@
                 </div>
                 <div class="card-body">
                     <form action="{{ route('agence.propriete.store') }}" method="POST" enctype="multipart/form-data">
+                        
                         @csrf
                         <div class="row">
                             <div class="form-group col-md-6">

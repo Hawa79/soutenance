@@ -67,7 +67,7 @@ Route::middleware(['auth', 'user-access:client'])->group(function () {
 Route::middleware(['auth', 'user-access:admin'])->group(function () {
     Route::get('/admin/dashboard', [HomeController::class, 'adminDashboard'])->name('admin.dashboard');
 
-    Route::controller(AgenceController::class)->group(function () {
+   Route::controller(AgenceController::class)->group(function () {
     Route::get('admin/agence', 'index')->name('admin.agence.index');
     Route::get('admin/agence/create', 'create')->name('admin.agence.create');
     Route::post('admin/agence/create', 'save')->name('admin.agence.store');

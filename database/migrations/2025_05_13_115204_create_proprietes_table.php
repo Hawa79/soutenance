@@ -13,7 +13,10 @@ return new class extends Migration
     {
         Schema::create('proprietes', function (Blueprint $table) {
             $table->id();
+
+            // agence_id qui pointe maintenant vers la table users
             $table->unsignedBigInteger('agence_id');
+
             $table->string('nom');
             $table->text('description');
             $table->string('adresse');
@@ -28,10 +31,10 @@ return new class extends Migration
             $table->integer('prix');
             $table->timestamps();
 
-            // Clé étrangère vers la table agences
+            // Lier à users et non à agences
             $table->foreign('agence_id')
                   ->references('id')
-                  ->on('agences')
+                  ->on('users')
                   ->onDelete('cascade');
         });
     }

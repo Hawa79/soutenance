@@ -122,8 +122,7 @@
 
                                 @else
                                 <li class="hidden-xs hidden-sm">
-                                    <a href="{{url('agence/login')}}"
-                                        class="btn btn-base rounded-0 text-bold-600 text-spacing-5 text-uppercase text-size-13 p-top-12 p-bottom-12 p-left-15 p-right-15 text-size-11-lg">Connexion Agence</a>
+                                    
                                 </li>
                                 @endif
                             </ul>
@@ -157,7 +156,7 @@
                     @if(Auth::guard('client')->check())
                     <li data-menu="dropdown" class="dropdown nav-item">
                         <a href="" class=" nav-link"><i
-                                class="fa fa-user"></i> <span>{{ Auth::guard('client')->user()->nom }} {{ Auth::guard('client')->user()->prenom }}</span></a>
+                                class="fa fa-user"></i> <span>{{ Auth::guard('client')->user()->nom }} {{ Auth::guard('client')->user()->nom }}</span></a>
                     </li>
                     @endif
                     @guest('client')

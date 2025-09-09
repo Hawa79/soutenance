@@ -9,7 +9,7 @@ class ImagePropriete extends Model
 {
     use HasFactory;
 
-    protected $table = 'images_proprietes';
+    protected $table = 'image_proprietes';
 
     protected $fillable = [
         'propriete_id',

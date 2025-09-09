@@ -1,90 +1,137 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Agence;
 
-use App\Http\Controllers\Controller;
-use App\Models\User; // Utiliser User pour les agences
+use App\Models\User;
+use App\Models\Agence;
+use App\Models\Paiement;
+use App\Models\Propriete;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rules\Password;
+use App\Http\Controllers\Admin\NotificationController;
 
 class AgenceController extends Controller
 {
-    public function index()
-    {
-        $agences = User::where('type', 1)->get();
-        return view('admin.agence.index', compact('agences'));
-    }
+    // ... tes autres méthodes inchangées ...
 
-    public function create()
-    {
-        // Pas besoin de récupérer toutes les agences ici, sauf si tu en as besoin dans la vue
-        return view('admin.agence.create');
-    }
-
-    public function save(Request $request)
+    /**
+     * Ajouter une propriété (exemple)
+     */
+    public function ajouterPropriete(Request $request)
     {
         $request->validate([
-            'name' => 'required|string',
-            'email' => 'required|email|unique:users,email', // vérifie l'unicité
-            'password' => 'nullable|string|min:6', // optionnel
+            'titre' => 'required|string',
+            'description' => 'required|string',
+            'prix' => 'required|numeric',
+            'ville' => 'required|string',
+            'type' => 'required|string',
         ]);
 
-        $agence = new User();
-        $agence->name = $request->name;
-        $agence->email = $request->email;
-        // Si tu veux utiliser le mot de passe passé en formulaire sinon un mot de passe par défaut
-        $agence->password = Hash::make($request->password ?? 'password');
-        $agence->type = 1; // type agence
-        
-        $agence->save();
+        $propriete = new Propriete();
+        $propriete->titre = $request->titre;
+        $propriete->description = $request->description;
+        $propriete->prix = $request->prix;
+        $propriete->ville = $request->ville;
+        $propriete->type = $request->type;
+        $propriete->agence_id = auth()->id();
+        $propriete->save();
 
-        toastr()->success("Agence ajoutée avec succès");
-        return redirect()->route('admin.agence.index');
+        // Notification à l'admin
+        NotificationController::createNotification(
+            'Nouvelle propriété publiée',
+            "L'agence " . auth()->user()->name . " a publié une nouvelle propriété : {$propriete->titre}",
+            'propriete',
+            1, // Id de l'admin ou destinataire
+            User::class // Type de notifiable
+        );
+
+        toastr()->success("Propriété ajoutée avec succès");
+        return redirect()->back();
     }
 
-    public function edit($id)
+    /**
+     * Mettre à jour une propriété (exemple)
+     */
+    public function updatePropriete(Request $request, $id)
     {
-        $agence = User::where('type', 1)->find($id);
-        if (!$agence) {
-            toastr()->error("Agence non trouvée");
-            return redirect()->route('admin.agence.index');
-        }
-        return view('admin.agence.edit', compact('agence'));
+        $propriete = Propriete::findOrFail($id);
+
+        $this->authorize('update', $propriete); // sécurité
+
+        $propriete->update($request->only(['titre', 'description', 'prix', 'ville', 'type']));
+
+        // Notification à l'admin
+        NotificationController::createNotification(
+            'Propriété modifiée',
+            "L'agence " . auth()->user()->name . " a modifié la propriété : {$propriete->titre}",
+            'propriete',
+            1,
+            User::class
+        );
+
+        toastr()->success("Propriété mise à jour avec succès");
+        return redirect()->back();
     }
 
-    public function update(Request $request, $id)
+    /**
+     * Supprimer une propriété (exemple)
+     */
+    public function deletePropriete($id)
     {
-        $agence = User::where('type', 1)->find($id);
-        if (!$agence) {
-            toastr()->error("Agence non trouvée");
-            return redirect()->route('admin.agence.index');
-        }
+        $propriete = Propriete::findOrFail($id);
+        $this->authorize('delete', $propriete);
 
-        $request->validate([
-            'name' => 'required|string',
-            'email' => 'required|email|unique:users,email,' . $id, // unique sauf pour lui-même
-        ]);
+        $titre = $propriete->titre;
+        $propriete->delete();
 
-        $agence->name = $request->name;
-        $agence->email = $request->email;
-        if ($request->filled('password')) {
-            $agence->password = Hash::make($request->password);
-        }
-        $agence->save();
+        // Notification à l'admin
+        NotificationController::createNotification(
+            'Propriété supprimée',
+            "L'agence " . auth()->user()->name . " a supprimé la propriété : {$titre}",
+            'propriete',
+            1,
+            User::class
+        );
 
-        toastr()->success("Agence modifiée avec succès");
-        return redirect()->route('admin.agence.index');
+        toastr()->success("Propriété supprimée avec succès");
+        return redirect()->back();
     }
-
-    public function delete($id)
+    public function info($id)
     {
-        $agence = User::where('type', 1)->find($id);
-        if ($agence) {
-            $agence->delete();
-            toastr()->success("Agence supprimée avec succès");
-        } else {
-            toastr()->error("Agence non trouvée");
-        }
-        return redirect()->route('admin.agence.index');
+        $agence = Agence::findOrFail($id);
+
+        // Récupérer toutes les propriétés liées à cette agence
+        $proprietes = Propriete::where('agence_id', $id)->with('images')->get();
+
+        return view('admin.agence.info', compact('agence', 'proprietes'));
     }
+
+    /**
+     * Paiements reçus
+     */
+    public function paiementsRecus()
+    {
+        $paiements = Paiement::where('agence_id', auth()->id())
+            ->with('client', 'propriete')
+            ->latest()
+            ->get();
+
+        // Notification au client (ou à l'admin si nécessaire)
+        foreach ($paiements as $paiement) {
+            NotificationController::createNotification(
+                'Nouveau paiement reçu',
+                "Le client " . $paiement->client->name . " a effectué un paiement pour {$paiement->propriete->titre}",
+                'paiement',
+                1,
+                User::class
+            );
+        }
+
+        return view('agence.paiements', compact('paiements'));
+    }
+
+    // ... reste des méthodes inchangées ...
 }

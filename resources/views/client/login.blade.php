@@ -44,15 +44,15 @@
             <!-- end pre-loader -->
 
             <!--start login contant-->
-            <div class="app-contant">
+             <div class="app-contant">
                 <div class="container">
                     <div class="row justify-content-center align-items-center h-100-vh">
                         <div class="col-lg-4">
                             <div class="d-flex align-items-center">
                                 <div class="login pt-4">
-                                    <h1 class="mb-2">Connexion Client</h1>
+                                    <h1 class="mb-2">Connexion</h1>
                                     <p>Pour acceder a votre compte.</p>
-                                    <form method="POST" action="{{ route('client.login.submit') }}" class="mt-3 mt-sm-5">
+                                    <form method="POST" action="{{ route('login') }}" class="mt-3 mt-sm-5">
                                         @csrf
                                         <div class="row">
                                             <div class="col-12">
@@ -83,6 +83,8 @@
                                             </div>
                                             <div class="col-12 mt-3">
                                                 <button type="submit" class="btn btn-light text-uppercase">Se Connecter</button>
+                                                <p>Pas encore de compte ? <a href="{{ route('client.register') }}">Inscrivez-vous ici</a></p>
+
                                             </div>
                                         </div>
                                     </form>

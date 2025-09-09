@@ -1,7 +1,7 @@
-<h2>Bienvenue {{ Auth::guard()->user()->name }}</h2>
+<h2>Bienvenue {{ Auth::user()->name }}</h2>
 
-<p>Email : {{ Auth::guard()->user()->email }}</p>
-<!-- <p>Téléphone : {{ Auth::guard()->user()->telephone }}</p> -->
+<p>Email : {{ Auth::user()->email }}</p>
+
 
 <form method="POST" action="{{ route('logout') }}">
     @csrf

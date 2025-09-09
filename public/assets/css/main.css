@@ -49,7 +49,7 @@ Version: 1.0
 /* 01 BACKGROUNDS */
 /*============================================================*/
 .bg-property-slider-1 { background: url('/assets/images/property/phot.jpg'); }
-.bg-property-slider-2 { background: url('/assets/images/property/propriete11.jpeg'); }
+.bg-property-slider-2 { background: url('/assets/images/property/propriete05.jpeg'); }
 .bg-property-slider-3 { background: url('/assets/images/property/property-5.jpg'); }
 /*============================================================*/
 /* 02 RESET */
@@ -972,6 +972,13 @@ header.main-header .inner-header {
 .ui-corner-all, .ui-corner-top, .ui-corner-left, .ui-corner-tl {
     border-radius: 50px !important;
 }
+.metismenu a.active {
+    background-color: #007bff; /* Bleu, ou la couleur de ton choix */
+    color: #fff !important;
+    font-weight: bold;
+    border-radius: 6px;
+}
+
 /*============================================================*/
 /* 26 AGENCY */
 /*============================================================*/

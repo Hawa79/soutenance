@@ -1,3 +1,8 @@
+@php
+use App\Models\Notification as UserNotification;
+use App\Models\User;
+@endphp
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -11,14 +16,20 @@
     <title>kcProperty</title>
 
     <link rel="icon" href="{{ asset('assets/images/favicon.png') }}" type="image/png">
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+    <!-- Font Awesome CDN -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <link href="{{ asset('https://fonts.googleapis.com/css?family=Varela+Round') }}" rel="stylesheet">
-
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
     <link rel="stylesheet" type="text/css" href="{{ asset('/assets/css/bootstrap.min.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('/assets/css/main.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('/assets/css/utility.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('/assets/css/responsive.css') }}">
-
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
     <!-- THEME COLOR -->
     <link href="{{ asset('/assets/css/colors/blue.css') }}" type="text/css" media="all" rel="stylesheet"
         id="colors" />
@@ -43,6 +54,20 @@
     <link rel="stylesheet"
         href="{{ asset('/assets/vendors/fileuploader/css/jquery.fileuploader-theme-thumbnails.css') }}" media="all">
 </head>
+<style>
+    .no-outline {
+        border: none !important;
+        outline: none !important;
+        box-shadow: none !important;
+        background: none !important;
+    }
+
+    .nav-item.active>.nav-link {
+        background-color: #2563eb;
+        color: white;
+        font-weight: bold;
+    }
+</style>
 
 <body data-menu="header-main-menu" class="bg-white body-main-menu header-main-menu">
 
@@ -62,75 +87,46 @@
         <!-- TOPBAR -->
         <div class="inner-header d-flex align-items-center">
             <div class="container">
-                <div class="row">
+                <div class="row align-items-center"> <!-- Ajouté align-items-center ici -->
                     <div class="col-lg-2 col-md-3 col-sm-4 col-xs-2">
                         <!-- LOGO -->
-                        <a class="navbar-brand logo" href="index.html">
-                            <img class="full-width max-width-130-sm max-width-130-md" alt="iProperty"
-                                src="/assets/images/logo.png">
+                        <a class="navbar-brand logo" href="{{ route('accueil') }}">
+                            <img class="full-width" style="max-width: 300px;" alt="iProperty"
+                                src="/assets/images/logo11.png">
                         </a>
                         <!-- /LOGO -->
                     </div>
                     <div class="col-lg-10 col-md-9 col-sm-8 text-right">
                         <div class="extra-info">
-                            <ul>
-                                <li class="m-top-5 hidden-xs hidden-sm hidden-md">
-                                    <i class="fa fa-phone text-base text-size-30"></i>
-                                    <div class="text">
-                                        <div class="text-top text-weight-400 text-muted text-size-13">
-                                            CONTACTEZ-NOUS
-                                        </div>
-                                        <div class="text-bottom text-bold-700 text-black">
-                                            (223) 82-82-78-71
-                                        </div>
+                            <ul class="d-flex justify-content-end gap-4"> <!-- Ajout de flex pour bien répartir -->
+                                <li class="d-flex align-items-center hidden-xs hidden-sm hidden-md">
+                                    <i class="fa fa-phone text-base text-size-30 me-2"></i>
+                                    <div class="text text-start">
+                                        <div class="text-top text-weight-400 text-muted text-size-13">CONTACTEZ-NOUS</div>
+                                        <div class="text-bottom text-bold-700 text-black">(223) 82-82-78-71</div>
                                     </div>
                                 </li>
-                                <li class="m-top-5 hidden-xs hidden-sm hidden-md">
-                                    <i class="fa fa-envelope-o text-base text-size-30"></i>
-                                    <div class="text">
-                                        <div class="text-top text-bold-400 text-muted text-size-13">
-                                            EMAIL
-                                        </div>
-                                        <div class="text-bottom text-bold-700 text-black">
-                                            AffouCoulibaly742@gmail.com
-                                        </div>
+                                <li class="d-flex align-items-center hidden-xs hidden-sm hidden-md">
+                                    <i class="fa fa-envelope-o text-base text-size-30 me-2"></i>
+                                    <div class="text text-start">
+                                        <div class="text-top text-bold-400 text-muted text-size-13">EMAIL</div>
+                                        <div class="text-bottom text-bold-700 text-black">AffouCoulibaly742@gmail.com</div>
                                     </div>
                                 </li>
-                                <li class="m-top-5 hidden-xs hidden-sm hidden-md">
-                                    <i class="fa fa-clock-o text-base text-size-30"></i>
-                                    <div class="text">
-                                        <div class="text-top text-bold-400 text-muted text-size-13">
-                                            NOUS SOMMES OUVERTS
-                                        </div>
-                                        <div class="text-bottom text-bold-700 text-black">
-                                            Lundi - Samadi
-                                        </div>
+                                <li class="d-flex align-items-center hidden-xs hidden-sm hidden-md">
+                                    <i class="fa fa-clock-o text-base text-size-30 me-2"></i>
+                                    <div class="text text-start">
+                                        <div class="text-top text-bold-400 text-muted text-size-13">NOUS SOMMES OUVERTS</div>
+                                        <div class="text-bottom text-bold-700 text-black">Lundi - Samedi</div>
                                     </div>
                                 </li>
-                                @if(Auth::guard('client')->check())
-                                <li class="hidden-xs hidden-sm">
-                                    <form method="POST" action="{{ route('client.logout') }}">
-                                        @csrf
-                                        <button type="submit"
-                                            class="btn btn-base rounded-0 text-bold-600 text-spacing-5 text-uppercase text-size-13 p-top-12 p-bottom-12 p-left-15 p-right-15 text-size-11-lg"
-                                            style="border: none; background: none;">
-                                            Déconnexion
-                                        </button>
-                                    </form>
-                                </li>
-
-
-                                @else
-                                <li class="hidden-xs hidden-sm">
-                                    
-                                </li>
-                                @endif
                             </ul>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+
         <!-- /TOPBAR -->
 
         <!-- NAVIGATION -->
@@ -138,40 +134,90 @@
             class="header-navbar navbar bg-base-dark navbar-fixed box-shadow-3">
 
             <!-- MENU CONTENT -->
-            <div data-menu="menu-container" class="container navbar-container main-menu-content">
+<div data-menu="menu-container" class="container navbar-container main-menu-content">
+    <ul id="main-menu-navigation" data-menu="menu-navigation" class="nav navbar-nav w-100">
 
-                <ul id="main-menu-navigation" data-menu="menu-navigation" class="nav navbar-nav">
-                    <li data-menu="dropdown" class="nav-item active">
-                        <a href="home" class=" nav-link"><i
-                                class="fa fa-home"></i> <span>Accueil</span></a>
-                    </li>
-                    <li data-menu="dropdown" class="dropdown nav-item">
-                        <a href="#proprietes" class=" nav-link"><i
-                                class="fa fa-building-o"></i><span>Propriétés</span></a>
-                    </li>
-                    <li data-menu="dropdown" class="dropdown nav-item">
-                        <a href="" class=" nav-link"><i
-                                class="fa fa-id-badge"></i> <span>Agences</span></a>
-                    </li>
-                    @if(Auth::guard('client')->check())
-                    <li data-menu="dropdown" class="dropdown nav-item">
-                        <a href="" class=" nav-link"><i
-                                class="fa fa-user"></i> <span>{{ Auth::guard('client')->user()->nom }} {{ Auth::guard('client')->user()->nom }}</span></a>
-                    </li>
-                    @endif
-                    @guest('client')
-                    <li data-menu="dropdown" class="dropdown nav-item">
-                        <a href="{{ route('client.register') }}" class=" nav-link"><i
-                                class="fa fa-user-plus"></i> <span>Créer un compte</span></a>
-                    </li>
-                    <li data-menu="dropdown" class="dropdown nav-item">
-                        <a href="{{ route('login') }}" class=" nav-link"><i
-                                class="fa fa-sign-in"></i> <span>Se Connecter</span></a>
-                    </li>
-                    @endguest
-                </ul>
+        <li data-menu="dropdown" class="nav-item {{ Route::is('accueil') ? 'active' : '' }}">
+            <a href="{{ route('accueil') }}" class="nav-link">
+                <i class="fa fa-home"></i> <span>Accueil</span>
+            </a>
+        </li>
 
-            </div>
+        <li data-menu="dropdown" class="dropdown nav-item {{ Route::is('propriete.locationVente.index') ? 'active' : '' }}">
+            <a href="{{ route('propriete.locationVente.index') }}" class="nav-link">
+                <i class="fa fa-building-o"></i><span> Propriétés</span>
+            </a>
+        </li>
+@auth
+    @if(Auth::user()->type !== 1) 
+        <li data-menu="dropdown" class="dropdown nav-item {{ Request::is('agences*') ? 'active' : '' }}">
+            <a href="{{ route('agences.index') }}" class="nav-link">
+                <i class="fa fa-id-badge"></i><span> Agences</span>
+            </a>
+        </li>
+    @endif
+@else
+    {{-- Utilisateur non connecté (invité) : afficher le lien agences --}}
+    <li data-menu="dropdown" class="dropdown nav-item {{ Request::is('agences*') ? 'active' : '' }}">
+        <a href="{{ route('agences.index') }}" class="nav-link">
+            <i class="fa fa-id-badge"></i><span> Agences</span>
+        </a>
+    </li>
+@endauth
+
+
+        @auth
+            @if(Auth::user()->type === 2)
+                <li class="dropdown nav-item">
+                    <a href="{{ route('client.profil') }}" class="nav-link">
+                        <i class="fa fa-user"></i>
+                        <span>{{ Auth::user()->name }} {{ Auth::user()->prenom ?? '' }}</span>
+                    </a>
+                </li>
+            @endif
+            @auth
+    @if(Auth::user()->type !== 1) 
+           <li class="dropdown nav-item">
+                <a href="{{ route('logout') }}" class="nav-link"
+                   onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                    <i class="fa fa-sign-out"></i> Déconnexion
+                </a>
+                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                    @csrf
+                </form>
+            </li>
+               @endif
+@else
+<li class="dropdown nav-item">
+                <a href="{{ route('logout') }}" class="nav-link"
+                   onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                    <i class="fa fa-sign-out"></i> Déconnexion
+                </a>
+                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                    @csrf
+                </form>
+            </li>
+            @endauth
+        @endauth
+
+        @guest
+            <li class="dropdown nav-item {{ Route::is('client.register') ? 'active' : '' }}">
+                <a href="{{ route('client.register') }}" class="nav-link">
+                    <i class="fa fa-user-plus"></i>
+                    <span>Créer un compte</span>
+                </a>
+            </li>
+
+            <li class="dropdown nav-item {{ Route::is('login') ? 'active' : '' }}">
+                <a href="{{ route('login') }}" class="nav-link">
+                    <i class="fa fa-sign-in"></i>
+                    <span>Se Connecter</span>
+                </a>
+            </li>
+        @endguest
+
+    </ul>
+</div>
             <!-- /MENU CONTENT -->
 
         </div>
@@ -180,243 +226,84 @@
     </header>
 
     @yield('content')
-    <footer class="footer">
-        <div class="bg-dark p-top-60 p-bottom-30">
-            <div class="container">
+<footer class="footer">
+    <div class="bg-dark pt-5 pb-4">
+        <div class="container">
 
-                <div class="row">
-
-                    <div class="col-md-12">
-                        <div
-                            class="border-1 border-solid border-dark border-top-0 border-left-0 border-right-0 p-bottom-40 m-bottom-40">
-
-                            <div class="row">
-
-                                <div class="col-md-6">
-                                    <!-- Begin: LOGO -->
-                                    <a class="navbar-brand logo" href="index.html">
-                                        <img class="full-width max-width-140 m-right-10" alt="iProperty"
-                                            src="assets/images/logo-white.png">
-                                    </a>
-                                    <span class="text-white">/ Real Buying Selling Property House</span>
-                                    <!-- End: LOGO -->
-                                </div>
-
-                                <div class="col-md-6">
-                                    <!-- Begin: SOCIAL -->
-                                    <ul class="social-icons m-top-15 text-right">
-                                        <li>
-                                            <a class="btn btn-base rounded-0" href="#" target="_blank"><i
-                                                    class="fa fa-facebook"></i></a>
-                                        </li>
-                                        <li>
-                                            <a class="btn btn-base rounded-0" href="#" target="_blank"><i
-                                                    class="fa fa-instagram"></i></a>
-                                        </li>
-                                        <li>
-                                            <a class="btn btn-base rounded-0" href="#" target="_blank"><i
-                                                    class="fa fa-twitter"></i></a>
-                                        </li>
-                                        <li>
-                                            <a class="btn btn-base rounded-0" href="#" target="_blank"><i
-                                                    class="fa fa-google-plus"></i></a>
-                                        </li>
-                                        <li>
-                                            <a class="btn btn-base rounded-0" href="#" target="_blank"><i
-                                                    class="fa fa-linkedin"></i></a>
-                                        </li>
-                                    </ul>
-                                    <!-- End: SOCIAL -->
-                                </div>
-
-                            </div>
-
-                        </div>
-                    </div>
-
+            <!-- Bande supérieure : logo + réseaux sociaux -->
+            <div class="d-flex justify-content-between align-items-center mb-4 border-bottom border-secondary pb-3">
+                <!-- Logo et slogan -->
+                <div class="d-flex align-items-center">
+                    <h4 class="text-white fw-bold m-0">kcPropriété</h4>
+                    <span class="text-white ms-3">/ Achat Vente Immobilier au Mali</span>
                 </div>
 
-                <div class="row">
+                <!-- Réseaux sociaux -->
+                <div>
+                    <ul class="list-inline mb-0">
+                        <li class="list-inline-item"><a class="btn btn-primary rounded-0" href="#"><i class="fa fa-facebook text-white"></i></a></li>
+                        <li class="list-inline-item"><a class="btn btn-primary rounded-0" href="#"><i class="fa fa-instagram text-white"></i></a></li>
+                        <li class="list-inline-item"><a class="btn btn-primary rounded-0" href="#"><i class="fa fa-twitter text-white"></i></a></li>
+                        <li class="list-inline-item"><a class="btn btn-primary rounded-0" href="#"><i class="fa fa-linkedin text-white"></i></a></li>
+                    </ul>
+                </div>
+            </div>
 
-                    <div class="col-lg-4 col-md-6">
-                        <div class="m-bottom-30">
+            <!-- Contenu principal -->
+            <div class="row text-start">
 
-                            <h5 class="text-bold-700 m-bottom-30 text-white text-uppercase">Latest Listing</h5>
+                <!-- À propos -->
+                <div class="col-md-4 mb-4">
+                    <h5 class="text-white fw-bold mb-3">À propos</h5>
+                    <p class="text-white-50 small">
+                        Chez <span class="text-white fw-bold">kcPropriété</span>, nous connectons biens, agences et clients avec simplicité et confiance.
+                    </p>
+                    <p class="text-warning fst-italic small mt-2">
+                        "Des projets clairs, une expérience sûre."
+                    </p>
+                </div>
 
-                            <div class="row">
-                                <div class="col-md-12">
-
-                                    <ul class="media-list">
-                                        <li>
-                                            <img alt="..." class="media-img"
-                                                src="assets/images/property/property-1-150x130.jpg">
-                                            <div class="media-content">
-                                                <h5 class="text-bold-700 text-base">$250,000</h5>
-                                                <h6><a class="text-white text-base-hover" href="#">Beautiful
-                                                        Small Apartment</a></h6>
-                                                <p class="address text-muted">253 Lake Washington, USA</p>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <img alt="..." class="media-img"
-                                                src="assets/images/property/property-2-150x130.jpg">
-                                            <div class="media-content">
-                                                <h5 class="text-bold-700 text-base">$120,000</h5>
-                                                <h6><a class="text-white text-base-hover" href="#">Beautiful
-                                                        Garaes Condo</a></h6>
-                                                <p class="address text-muted">154 Drive, New York</p>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <img alt="..." class="media-img"
-                                                src="assets/images/property/property-3-150x130.jpg">
-                                            <div class="media-content">
-                                                <h5 class="text-bold-700 text-base">$145,000</h5>
-                                                <h6><a class="text-white text-base-hover" href="#">Global Land
-                                                        House</a></h6>
-                                                <p class="address text-muted">110 Lake, United Kingdom</p>
-                                            </div>
-                                        </li>
-                                    </ul>
-
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
-
-                    <div class="col-lg-4 col-md-6">
-                        <div class="m-bottom-30">
-
-                            <h5 class="text-bold-700 m-bottom-26 text-white text-uppercase">Popular Countries</h5>
-
-                            <div class="row">
-                                <div class="col-lg-12 col-md-12">
-
-                                    <ul class="icon-list m-bottom-20">
-                                        <li>
-                                            <i class="btn btn-base fa fa-angle-double-right"></i>
-                                            <a class="text-white text-base-hover" href="#">France</a>
-                                            <span class="text-base float-right">(10)</span>
-                                        </li>
-                                        <li>
-                                            <i class="btn btn-base fa fa-angle-double-right"></i>
-                                            <a class="text-white text-base-hover" href="#">United States</a>
-                                            <span class="text-base float-right">(20)</span>
-                                        </li>
-                                        <li>
-                                            <i class="btn btn-base fa fa-angle-double-right"></i>
-                                            <a class="text-white text-base-hover" href="#">China</a>
-                                            <span class="text-base float-right">(12)</span>
-                                        </li>
-                                        <li>
-                                            <i class="btn btn-base fa fa-angle-double-right"></i>
-                                            <a class="text-white text-base-hover" href="#">Spain</a>
-                                            <span class="text-base float-right">(15)</span>
-                                        </li>
-                                        <li>
-                                            <i class="btn btn-base fa fa-angle-double-right"></i>
-                                            <a class="text-white text-base-hover" href="#">Poland</a>
-                                            <span class="text-base float-right">(25)</span>
-                                        </li>
-                                        <li>
-                                            <i class="btn btn-base fa fa-angle-double-right"></i>
-                                            <a class="text-white text-base-hover" href="#">Italy</a>
-                                            <span class="text-base float-right">(10)</span>
-                                        </li>
-                                        <li>
-                                            <i class="btn btn-base fa fa-angle-double-right"></i>
-                                            <a class="text-white text-base-hover" href="#">Turkey</a>
-                                            <span class="text-base float-right">(20)</span>
-                                        </li>
-                                        <li>
-                                            <i class="btn btn-base fa fa-angle-double-right"></i>
-                                            <a class="text-white text-base-hover" href="#">United Kingdom</a>
-                                            <span class="text-base float-right">(12)</span>
-                                        </li>
-                                        <li>
-                                            <i class="btn btn-base fa fa-angle-double-right"></i>
-                                            <a class="text-white text-base-hover" href="#">Germany</a>
-                                            <span class="text-base float-right">(15)</span>
-                                        </li>
-                                        <li>
-                                            <i class="btn btn-base fa fa-angle-double-right"></i>
-                                            <a class="text-white text-base-hover" href="#">Singapore</a>
-                                            <span class="text-base float-right">(25)</span>
-                                        </li>
-                                    </ul>
-
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
-
-                    <div class="col-lg-4 col-md-12">
-                        <div class="m-bottom-30">
-
-                            <div class="row">
-
-                                <div class="col-lg-12 col-md-6">
-                                    <h5 class="text-bold-700 m-bottom-30 text-white text-uppercase">Contact Us</h5>
-
-                                    <div class="row m-bottom-20">
-                                        <div class="col-md-12">
-
-                                            <p class="text-white">Address: 253 Lake Washington, USA</p>
-                                            <p class="text-white">Phone: (123) 123-456</p>
-                                            <p class="text-white">E-Mail: <a
-                                                    class="text-base border-1 border-dotted border-light border-top-0 border-left-0 border-right-0"
-                                                    href="#">office@example.com</a></p>
-
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-12 col-md-6">
-
-                                    <h5 class="text-bold-700 m-bottom-30 text-white text-uppercase">Newsletter</h5>
-
-                                    <div class="row m-bottom-20">
-                                        <div class="col-md-12">
-
-                                            <form>
-                                                <div class="form-group">
-                                                    <div class="input-group">
-                                                        <input type="email"
-                                                            class="form-control form-control-lg rounded-0 bg-white text-size-14"
-                                                            placeholder="Enter your email">
-                                                        <button type="submit"
-                                                            class="input-group-addon btn btn-base rounded-0 text-bold-600 text-spacing-5 text-uppercase text-size-13  p-top-12 p-bottom-12 p-left-20 p-right-20"><i
-                                                                class="fa fa-envelope"></i></button>
-                                                    </div>
-                                                </div>
-                                                <p class="text-muted">Subscribe to our newsletter and we will inform
-                                                    you about newset projects and promotions</p>
-                                            </form>
-
-                                        </div>
-                                    </div>
-                                </div>
-
-                            </div>
-
-                        </div>
-                    </div>
-
+                <!-- Contact -->
+                <div class="col-md-4 mb-4">
+                    <h5 class="text-white fw-bold mb-3">Nous Contacter</h5>
+                    <p class="text-white-50 small">
+                        <i class="fas fa-map-marker-alt me-2 text-primary"></i> 
+                        Hamdallaye ACI 2000, Bamako, Mali
+                    </p>
+                    <p class="text-white-50 small">
+                        <i class="fas fa-phone-alt me-2 text-primary"></i> 
+                        (+223) 82-82-78-71
+                    </p>
+                    <p class="text-white-50 small">
+                        <i class="fas fa-envelope me-2 text-primary"></i> 
+                        <a href="mailto:affouCoulibaly742@gmail.com" class="text-white-50 text-decoration-underline">
+                            affouCoulibaly742@gmail.com
+                        </a>
+                    </p>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <h5 class="text-white fw-bold mb-3">Notre engagement</h5>
+                    <p class="text-white-50 small">
+                        <i class="fas fa-quote-left me-2 text-primary"></i>
+                        "Simplifier la gestion immobilière tout en inspirant confiance."
+                    </p>
                 </div>
 
             </div>
         </div>
+    </div>
 
-        <div class="bg-base p-top-30 p-bottom-20">
-            <div class="container">
-                <p class="text-white m-bottom-6">© Copyright 2017 <a
-                        class="text-white border-1 border-dotted border-light border-top-0 border-left-0 border-right-0"
-                        href="index.html">iProperty</a>. All Rights Reserved.</p>
-            </div>
+    <!-- Pied de page -->
+    <div class="bg-primary py-3">
+        <div class="container text-center">
+            <p class="text-white mb-0">© 2025 <a href="#" class="text-white text-decoration-underline">kcPropriété</a>. Tous droits réservés.</p>
         </div>
-    </footer>
+    </div>
+</footer>
+
+
+    
+
     <!-- End: FOOTER -
     ################################################################## -->
 
@@ -433,7 +320,7 @@
     <script src="assets/vendors/menu/js/vendors-menu.min.js"></script>
     <script src="assets/vendors/menu/js/jquery.sticky.js"></script>
     <script src="assets/vendors/menu/js/app-menu.js"></script>
-
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <!-- MAP -->
     <script src="assets/vendors/gmap/jquery.axgmap.js"></script>
 
@@ -564,19 +451,9 @@
         ga('create', 'UA-70250779-1', 'auto');
         ga('send', 'pageview');
     </script>
-    @if (session('client_name'))
-    <div>
-        Bonjour, {{ session('client_name') }}
-        <form method="POST" action="{{ route('deconnexion') }}" style="display:inline;">
-            @csrf
-            <button type="submit">Déconnexion</button>
-        </form>
-    </div>
-    @else
-    <a href="{{ route('register') }}">Créer un compte</a> |
-    <a href="{{ route('register') }}">Se connecter</a>
-    @endif
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
+    @yield('modals')
 
 </body>
 

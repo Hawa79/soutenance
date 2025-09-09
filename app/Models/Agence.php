@@ -4,13 +4,14 @@ namespace App\Models;
 
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Agence extends Authenticatable
 {
-    use Notifiable;
+    use Notifiable, HasFactory;
 
     protected $fillable = [
-        'nom',
+        'name',
         'prenom',
         'email',
         'password',
@@ -28,6 +29,17 @@ class Agence extends Authenticatable
     {
         return $this->hasMany(Propriete::class);
     }
-  
+   public function demandes()
+    {
+        return $this->hasMany(Demande::class, 'agence_id');
+    }
+
+    // Relation polymorphe pour les notifications reçues par cette agence
+   public function notifications()
+{
+    return $this->morphMany(Notification::class, 'notifiable');
+}
+
+
 
 }

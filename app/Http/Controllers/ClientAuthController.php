@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Client;
+use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 
@@ -60,18 +60,22 @@ class ClientAuthController extends Controller
         // Validation des données d'inscription
         $request->validate([
             'prenom' => 'required|string|max:255',
-            'nom' => 'required|string|max:255',
-            'email' => 'required|email|unique:clients,email',
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:users,email',
+            'telephone' => 'required',
+            'adresse' => 'required',
+            'sexe' => 'required|in:M,Mme,Autre',
             'password' => 'required|string|min:6|confirmed', // Confirmation du mot de passe
         ]);
 
-        // Création du client
-        $client = Client::create([
+        // Création du client 
+        $client = User::create([
             'prenom' => $request->prenom,
-            'nom' => $request->nom,
+            'name' => $request->name,
             'email' => $request->email,
             'telephone' => $request->telephone,
             'adresse' => $request->adresse,
+            'sexe' => $request->sexe,
             'password' => Hash::make($request->password),
         ]);
 
@@ -85,11 +89,13 @@ class ClientAuthController extends Controller
     /**
      * Déconnexion du client.
      */
-    public function logout()
-    {
-        Auth::guard('client')->logout();
+   public function logout()
+{
+    Auth::guard('client')->logout(); // Déconnecte le client
+    request()->session()->invalidate(); // Invalide la session
+    request()->session()->regenerateToken(); // Régénère le token CSRF
 
-        // Redirection vers la page d'accueil
-        return redirect()->to('/');
-    }
+    return redirect()->route('accueil'); // Redirection après déconnexion
+}
+
 }

@@ -5,14 +5,14 @@
     <h2>Modifier la propriété</h2>
 
     @if ($errors->any())
-        <div class="alert alert-danger">
-            <strong>Erreur !</strong> Veuillez corriger les champs suivants :
-            <ul>
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
+    <div class="alert alert-danger">
+        <strong>Erreur !</strong> Veuillez corriger les champs suivants :
+        <ul>
+            @foreach ($errors->all() as $error)
+            <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
     @endif
 
     <form action="{{ route('agence.propriete.update', $propriete->id) }}" method="POST" enctype="multipart/form-data">
@@ -70,11 +70,6 @@
         </div>
 
         <div class="form-group">
-            <label>Proposition :</label>
-            <input type="text" name="proposition" value="{{ old('proposition', $propriete->proposition) }}" class="form-control" required>
-        </div>
-
-        <div class="form-group">
             <label>Année de construction :</label>
             <input type="number" name="annee_de_construction" value="{{ old('annee_de_construction', $propriete->annee_de_construction) }}" class="form-control" min="1900" max="{{ date('Y') }}" required>
         </div>
@@ -83,6 +78,15 @@
             <label>Prix :</label>
             <input type="number" step="0.01" name="prix" value="{{ old('prix', $propriete->prix) }}" class="form-control" required>
         </div>
+        <div class="form-group">
+            <label>Type de transaction :</label>
+            <select name="type_transaction" class="form-control" required>
+                <option value="">-- Sélectionner une transaction --</option>
+                <option value="location" {{ old('type_transaction', $propriete->type_transaction) == 'location' ? 'selected' : '' }}>Location</option>
+                <option value="vente" {{ old('type_transaction', $propriete->type_transaction) == 'vente' ? 'selected' : '' }}>Vente</option>
+            </select>
+        </div>
+
 
         <div class="form-group">
             <label>Ajouter de nouvelles images :</label>
@@ -93,10 +97,10 @@
             <label>Images existantes :</label>
             <div class="row">
                 @foreach($propriete->images as $image)
-                    <div class="col-md-3 mb-3">
-                        <img src="{{ asset('storage/' . $image->image) }}" class="img-fluid rounded" alt="Image">
-                        {{-- Ajouter un bouton pour supprimer une image si nécessaire --}}
-                    </div>
+                <div class="col-md-3 mb-3">
+                    <img src="{{ asset('storage/' . $image->image) }}" class="img-fluid rounded" alt="Image">
+                    {{-- Ajouter un bouton pour supprimer une image si nécessaire --}}
+                </div>
                 @endforeach
             </div>
         </div>

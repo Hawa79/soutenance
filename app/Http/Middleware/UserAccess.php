@@ -1,24 +1,32 @@
 <?php
-  
+
 namespace App\Http\Middleware;
-  
+
 use Closure;
 use Illuminate\Http\Request;
-use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Support\Facades\Auth;
 
 class UserAccess
 {
-    /**
-     * Handle an incoming request.
-     *
-     * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
-     */
-    public function handle(Request $request, Closure $next, $userType): Response
+    public function handle(Request $request, Closure $next, string $userType)
     {
-        if(auth()->user()->type == $userType){
-            return $next($request);
+        $types = [
+            'admin'  => 0,
+            'agence' => 1,
+            'client' => 2,
+        ];
+
+        // Vérifie si l'utilisateur est connecté
+        if (!Auth::check()) {
+            return redirect()->route('login')->with('error', 'Veuillez vous connecter pour accéder à cette page.');
         }
-          
-        return response()->json(['You do not have permission to access for this page.']);
+
+        // Vérifie si le type d'utilisateur correspond
+        if (!isset($types[$userType]) || Auth::user()->type !== $types[$userType]) {
+            return redirect()->back()->with('error', 'Vous n’avez pas la permission d’accéder à cette page.');
+        }
+
+        // ✅ Autorise l’accès
+        return $next($request);
     }
 }

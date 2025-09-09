@@ -15,11 +15,12 @@ class Client extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'nom',
+        'name',
         'prenom',
         'email',
         'telephone',
         'adresse',
+        'sexe',
         'password',
     ];
 
@@ -45,5 +46,15 @@ class Client extends Authenticatable
     /**
      * Méthode pour définir un mot de passe hashé.
      */
-    
+    public function demandes()
+    {
+        return $this->hasMany(Demande::class, 'client_id');
+    }
+
+    // Relation polymorphe pour les notifications reçues par ce client
+    public function notifications()
+{
+    return $this->morphMany(Notification::class, 'notifiable');
+}
+
 }

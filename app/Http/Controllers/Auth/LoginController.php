@@ -2,27 +2,45 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Http\Controllers\Controller;
-use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use App\Models\Activite;
 use Illuminate\Http\Request;
-use Illuminate\Http\RedirectResponse;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
 class LoginController extends Controller
 {
     use AuthenticatesUsers;
 
-    protected $redirectTo = '/dashboard'; // Corrigé "dashbord" → "dashboard"
+   
+
+    /**
+     * Enregistrement de l'activité après authentification.
+     */
+    protected function authenticated(Request $request, $user)
+    {
+        Activite::create([
+            'user_id'    => $user->id,
+            'action'     => 'Connexion',
+            'description'=> 'L\'utilisateur s\'est connecté',
+            'type'       => $user->type == 0 ? 'admin' : ($user->type == 1 ? 'agence' : 'client'),
+            'ip_address' => $request->ip(),
+        ]);
+    }
 
     public function __construct()
     {
         $this->middleware('guest')->except('logout');
     }
 
+    /**
+     * Gère la tentative de connexion.
+     */
     public function login(Request $request): RedirectResponse
     {
         $request->validate([
-            'email' => 'required|email',
+            'email'    => 'required|email',
             'password' => 'required',
         ]);
 
@@ -31,16 +49,14 @@ class LoginController extends Controller
         if (Auth::attempt($credentials)) {
             $user = Auth::user();
 
+            // Redirection selon le type d'utilisateur
             switch ($user->type) {
-                case 'admin':
-                case 0: // si admin est type 0
+                case 0: // Admin
                     return redirect()->route('admin.dashboard');
-                case 'agence':
-                case 1: // si agence est type 1
+                case 1: // Agence
                     return redirect()->route('agence.dashboard');
-                case 'client':
-                case 2: // si client est type 2
-                    return redirect()->route('client.dashboard');
+                case 2: // Client
+                    return redirect('/');
                 default:
                     Auth::logout();
                     return redirect('/login')->with('error', 'Type d\'utilisateur non reconnu.');
@@ -50,10 +66,12 @@ class LoginController extends Controller
         return redirect()->back()->with('error', 'Email ou mot de passe incorrect.');
     }
 
+    /**
+     * Déconnexion de l'utilisateur.
+     */
     public function logout(Request $request): RedirectResponse
     {
         Auth::logout();
-
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
